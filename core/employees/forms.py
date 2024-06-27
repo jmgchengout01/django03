@@ -79,6 +79,7 @@ class EmployeeCreationForm(forms.ModelForm):
 
 
 class EmployeeUpdateForm(forms.ModelForm):
+    username = forms.CharField(max_length=150)
     email = forms.EmailField()
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
@@ -92,18 +93,18 @@ class EmployeeUpdateForm(forms.ModelForm):
     province = forms.CharField(max_length=50)
     city = forms.CharField(max_length=50)
     area_code = forms.CharField(max_length=10)
-    # departments = forms.ModelMultipleChoiceField(
-    #     queryset=Department.objects.all(), widget=forms.CheckboxSelectMultiple)
     categories = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple)
-    # privileges = forms.ModelMultipleChoiceField(
-    #     queryset=Privilege.objects.all(), widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = Employee
         fields = [
+            'username',
+            'email',
+            'first_name',
+            'last_name',
             'middle_name',
             'gender',
             'date_of_birth',
@@ -117,6 +118,14 @@ class EmployeeUpdateForm(forms.ModelForm):
             # 'departments',
             # 'privileges'
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.user:
+            self.fields['username'].initial = self.instance.user.username
+            self.fields['email'].initial = self.instance.user.email
+            self.fields['first_name'].initial = self.instance.user.first_name
+            self.fields['last_name'].initial = self.instance.user.last_name
 
     def save(self, commit=True):
         employee = super().save(commit=False)
