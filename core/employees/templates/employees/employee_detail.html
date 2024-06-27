@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Employee Detail{% endblock %}
+{% block content %}
+  <h1>Employee Detail</h1>
+  <p>Username: {{ object.user.username }}</p>
+  <p>First Name: {{ object.user.first_name }}</p>
+  <p>Last Name: {{ object.user.last_name }}</p>
+  <p>Middle Name: {{ object.middle_name }}</p>
+  <p>Gender: {{ object.gender }}</p>
+  <p>Date of Birth: {{ object.date_of_birth }}</p>
+  <p>Address: {{ object.address }}</p>
+  <p>Country: {{ object.country }}</p>
+  <p>Province: {{ object.province }}</p>
+  <p>City: {{ object.city }}</p>
+  <p>Area Code: {{ object.area_code }}</p>
+  <p>Departments: {% for dept in object.departments.all %}{{ dept.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p>Categories: {% for cat in object.categories.all %}{{ cat.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p>Tags: {% for tag in object.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p>Privileges: {% for priv in object.privileges.all %}{{ priv.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <a href="{% url 'employee-update' object.pk %}">Edit</a> |
+  <a href="{% url 'employee-delete' object.pk %}">Delete</a>
+{% endblock %}

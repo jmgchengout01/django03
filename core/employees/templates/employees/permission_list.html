@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Permissions</h2>
+  <a href="{% url 'employees:permission-create' %}">Create new permission</a>
+  <ul>
+    {% for permission in object_list %}
+      <li>
+        {{ permission.name }} 
+        <a href="{% url 'employees:permission-update' permission.id %}">Edit</a>
+        <a href="{% url 'employees:permission-delete' permission.id %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,9 @@
+body {
+    margin-top: 5rem;
+}
+.navbar a,  .navbar button{
+    color: white;
+}
+.bg-vitamin {
+    background-color: #0d6efd;
+}	
